@@ -1,15 +1,49 @@
 "use client";
 
-import React, { useState } from "react";
+import { AlertCircle, Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import QRCode from "react-qr-code";
 import { trpcClient } from "@/utils/trpcClient";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { buttonVariants } from "./ui/button";
 import { DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 
 const TwoAuthentication = () => {
   const [otp, setOtp] = useState("");
-  const { data } = trpcClient.generateOtp.useQuery();
-  console.log(data);
+  const { data, isFetched, isError, error } = trpcClient.generateOtp.useQuery();
+  const { mutate, isPending } = trpcClient.verifyOtp.useMutation();
+
+  useEffect(() => {
+    if (otp.length === 6) {
+      mutate(
+        { otp },
+        {
+          onSuccess: ({ isVerified }) => {
+            console.log(isVerified);
+          },
+        },
+      );
+    }
+  }, [mutate, otp]);
+
+  if (!isFetched) {
+    return (
+      <div className="mx-auto">
+        <Loader2 className="h-8 w-8 animate-spin text-zinc-800" />
+      </div>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <Alert variant="destructive" className="min-w-[200px]">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>{error?.data?.code}</AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <>
@@ -41,9 +75,17 @@ const TwoAuthentication = () => {
           then scan this QR code please.
         </DrawerDescription>
       </DrawerHeader>
-      <div>
-        <div>
-          <InputOTP maxLength={6} value={otp} onChange={setOtp}>
+      <div className="my-2">
+        <QRCode size={150} className="m-auto" value={data.url} />
+        <div className="flex items-center justify-center mt-8 flex-col">
+          <InputOTP
+            id="otp"
+            maxLength={6}
+            value={otp}
+            onChange={setOtp}
+            className="mx-auto"
+            disabled={isPending}
+          >
             <InputOTPGroup>
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
@@ -53,6 +95,9 @@ const TwoAuthentication = () => {
               <InputOTPSlot index={5} />
             </InputOTPGroup>
           </InputOTP>
+          <p className="text-center text-sm mt-2">
+            Enter your one-time password.
+          </p>
         </div>
       </div>
     </>

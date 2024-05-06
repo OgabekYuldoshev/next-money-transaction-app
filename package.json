@@ -30,6 +30,7 @@
     "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
+    "react-qr-code": "^2.0.12",
     "sonner": "^1.4.41",
     "speakeasy": "^2.0.0",
     "tailwind-merge": "^2.3.0",

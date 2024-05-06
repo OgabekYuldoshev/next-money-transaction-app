@@ -1,6 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { TRPCError } from "@trpc/server";
 import speakeasy from "speakeasy";
+import { z } from "zod";
 import { db } from "@/utils/db";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 
@@ -34,6 +35,7 @@ export const appRouter = router({
   }),
   generateOtp: privateProcedure.query(async ({ ctx: { userId, user } }) => {
     const prefix = "otpauth://totp/SecretKey?secret=";
+
     if (user.otpToken) {
       return { url: prefix + user.otpToken };
     }
@@ -51,6 +53,32 @@ export const appRouter = router({
 
     return { url: prefix + updatedUser.otpToken };
   }),
+  verifyOtp: privateProcedure
+    .input(
+      z.object({
+        otp: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx: { user, userId }, input: { otp } }) => {
+      if (!user.otpToken) throw new TRPCError({ code: "BAD_REQUEST" });
+
+      const isVerified = speakeasy.totp.verify({
+        secret: user.otpToken,
+        encoding: "base32",
+        token: otp,
+      });
+
+      await db.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          isVerified,
+        },
+      });
+
+      return { isVerified };
+    }),
 });
 
 export type AppRouter = typeof appRouter;
