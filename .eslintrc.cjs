@@ -33,6 +33,12 @@ module.exports = configure({
                     "argsIgnorePattern": "^_",
                 },
             ],
+            "prettier/prettier": [
+                "error",
+                {
+                    "endOfLine": "auto"
+                }
+            ],
         },
     }
 })
