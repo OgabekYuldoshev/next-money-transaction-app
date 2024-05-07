@@ -11,16 +11,16 @@ datasource db {
 model User {
   id         String  @id @unique
   email      String  @unique
-  otpToken      String? @unique
+  otpToken   String? @unique
   isVerified Boolean @default(false)
 
-  Account Account?
+  account Account?
 }
 
 model Account {
-  id     Int @id @default(autoincrement())
-  number Int @unique
-  amount Int @default(5000)
+  id     Int    @id @default(autoincrement())
+  number String @unique
+  amount Int    @default(5000)
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique

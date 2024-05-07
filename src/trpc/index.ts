@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import speakeasy from "speakeasy";
 import { z } from "zod";
 import { db } from "@/utils/db";
+import { generateCreditCardNumber } from "@/utils/utils";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 
 export const appRouter = router({
@@ -21,12 +22,18 @@ export const appRouter = router({
         id: user.id,
       },
     });
+
     if (!dbUser) {
       // create user in db
       await db.user.create({
         data: {
           id: user.id,
           email: user.email,
+          account: {
+            create: {
+              number: generateCreditCardNumber(),
+            },
+          },
         },
       });
     }
@@ -79,6 +86,17 @@ export const appRouter = router({
 
       return { isVerified };
     }),
+  getAccountInfo: privateProcedure.query(async ({ ctx: { user } }) => {
+    const account = await db.account.findFirst({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (!account) throw new TRPCError({ code: "NOT_FOUND" });
+
+    return account;
+  }),
 });
 
 export type AppRouter = typeof appRouter;

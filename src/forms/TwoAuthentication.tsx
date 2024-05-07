@@ -3,11 +3,20 @@
 import { AlertCircle, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
+import { toast } from "sonner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { trpcClient } from "@/utils/trpcClient";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { buttonVariants } from "./ui/button";
-import { DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 
 const TwoAuthentication = () => {
   const [otp, setOtp] = useState("");
@@ -20,7 +29,11 @@ const TwoAuthentication = () => {
         { otp },
         {
           onSuccess: ({ isVerified }) => {
-            console.log(isVerified);
+            if (isVerified) {
+              toast.success(
+                "Congratulate🫡!, Successfully enabled Two Factor Authentication.",
+              );
+            }
           },
         },
       );

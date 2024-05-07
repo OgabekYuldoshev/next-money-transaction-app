@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import NextTopLoader from "nextjs-toploader";
 import React from "react";
+import { Toaster } from "@/components/ui/sonner";
 import { trpcClient } from "@/utils/trpcClient";
 import { getBaseUrl } from "@/utils/utils";
 
@@ -25,6 +26,7 @@ const Providers = ({ children }: IPros) => {
       <QueryClientProvider client={queryClient}>
         <NextTopLoader />
         {children}
+        <Toaster />
       </QueryClientProvider>
     </trpcClient.Provider>
   );
