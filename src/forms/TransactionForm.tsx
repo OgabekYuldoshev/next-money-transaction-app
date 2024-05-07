@@ -11,16 +11,12 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { trpcClient } from "@/utils/trpcClient";
 import {
   generateCreditCardNumber,
   isValidCreditCardNumber,
 } from "@/utils/utils";
 
 const TransactionForm = () => {
-  const { data } = trpcClient.getAccountInfo.useQuery();
-
-  console.log(data);
   const [number, setNumber] = useState("");
 
   useEffect(() => {

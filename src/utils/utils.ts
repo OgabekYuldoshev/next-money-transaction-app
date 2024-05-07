@@ -12,7 +12,7 @@ export function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }
 
-export function generateCreditCardNumber(length = 16): string {
+export function generateCreditCardNumber(length = 15): string {
   const prefix = "9";
   let cardNumber: string = prefix;
 

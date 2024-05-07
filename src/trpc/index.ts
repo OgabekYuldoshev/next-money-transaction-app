@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { TRPCError } from "@trpc/server";
 import speakeasy from "speakeasy";
@@ -96,6 +97,22 @@ export const appRouter = router({
     if (!account) throw new TRPCError({ code: "NOT_FOUND" });
 
     return account;
+  }),
+  getUserInfo: privateProcedure.query(async ({ ctx: { user } }) => {
+    const dbUser = await db.user.findUnique({
+      where: {
+        id: user.id,
+      },
+      select: {
+        id: true,
+        email: true,
+        isVerified: true,
+      },
+    });
+
+    if (!dbUser) throw new TRPCError({ code: "NOT_FOUND" });
+
+    return dbUser;
   }),
 });
 
