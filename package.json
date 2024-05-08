@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@kinde-oss/kinde-auth-nextjs": "^2.2.5",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -30,6 +31,7 @@
     "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.4",
     "react-qr-code": "^2.0.12",
     "sonner": "^1.4.41",
     "speakeasy": "^2.0.0",

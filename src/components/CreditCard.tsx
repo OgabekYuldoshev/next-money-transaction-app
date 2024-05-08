@@ -29,7 +29,7 @@ const CreditCard = () => {
             {new Intl.NumberFormat("us-US", {
               style: "currency",
               currency: "USD",
-            }).format(account.data?.amount || 0)}
+            }).format(account.data?.balance || 0)}
           </p>
           <div className="block bg-zinc-500 rounded-xl p-4 bg-opacity-50 mt-10 space-y-2">
             <h3 className="font-medium text-sm md:text-base">
