@@ -5,5 +5,5 @@ export default function middleware(req: Request) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/callback"],
+  matcher: ["/dashboard", "/callback"],
 };
