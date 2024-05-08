@@ -1,9 +1,7 @@
-import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
-
-export default function middleware(req: Request) {
-  return withAuth(req);
-}
+import { authMiddleware } from "@kinde-oss/kinde-auth-nextjs/middleware";
 
 export const config = {
-  matcher: ["/dashboard", "/callback"],
+  matcher: ["/dashboard/:path*", "/callback"],
 };
+
+export default authMiddleware;
