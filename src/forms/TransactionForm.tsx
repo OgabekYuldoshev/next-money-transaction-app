@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -30,7 +30,7 @@ const validation = zodResolver(
   }),
 );
 
-const TransactionForm = () => {
+const TransactionForm = ({ onClose }: { onClose(): void }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isOtp, setOtp] = useState(false);
@@ -57,6 +57,7 @@ const TransactionForm = () => {
     transaction.mutate(values, {
       onSuccess() {
         toast.success("Congratulate😍, Transacrion successfully done!");
+        ctx.getAccountInfo.invalidate().then(() => onClose());
       },
     });
   };
@@ -186,6 +187,9 @@ const TransactionForm = () => {
               <Button type="button" onClick={() => setOtp(true)}>
                 <Send className="mr-2" /> Submit
               </Button>
+            )}
+            {transaction.isPending && (
+              <Loader2 className="h-8 w-8 animate-spin text-zinc-800 mx-auto" />
             )}
           </>
         )}

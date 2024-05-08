@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/input-otp";
 import { trpcClient } from "@/utils/trpcClient";
 
-const TwoAuthentication = () => {
+const TwoAuthentication = ({ onClose }: { onClose(): void }) => {
   const [otp, setOtp] = useState("");
+  const { getUserInfo } = trpcClient.useUtils();
   const { data, isFetched, isError, error } = trpcClient.generateOtp.useQuery();
   const { mutate, isPending } = trpcClient.verifyOtp.useMutation();
 
@@ -33,6 +34,7 @@ const TwoAuthentication = () => {
               toast.success(
                 "Congratulate🫡!, Successfully enabled Two Factor Authentication.",
               );
+              getUserInfo.invalidate().then(() => onClose());
             }
           },
         },
