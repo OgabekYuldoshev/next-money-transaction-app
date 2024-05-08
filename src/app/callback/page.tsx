@@ -18,7 +18,7 @@ const Page = () => {
     },
   );
 
-  if (isSuccess && data?.success) {
+  if (isSuccess && data.success) {
     router.push(origin ? `/${origin}` : "/dashboard");
   }
 
