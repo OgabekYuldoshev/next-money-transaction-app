@@ -8,7 +8,7 @@ const Page = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user) redirect("/auth-callback?origin=dashboard");
+  if (!user) redirect("/callback?origin=dashboard");
 
   const dbUser = await db.user.findFirst({
     where: {
@@ -16,7 +16,7 @@ const Page = async () => {
     },
   });
 
-  if (!dbUser) redirect("/auth-callback?origin=dashboard");
+  if (!dbUser) redirect("/callback?origin=dashboard");
 
   return <Dashboard />;
 };
