@@ -5,12 +5,12 @@ import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Button } from "../components/ui/button";
 import {
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from "../components/ui/drawer";
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { trpcClient } from "../utils/trpcClient";
@@ -88,10 +88,10 @@ const TransactionForm = ({ onClose }: { onClose(): void }) => {
 
   return (
     <div className="w-[400px]">
-      <DrawerHeader>
-        <DrawerTitle>Money Transaction</DrawerTitle>
-        <DrawerDescription>Send money your friend</DrawerDescription>
-      </DrawerHeader>
+      <DialogHeader>
+        <DialogTitle>Money Transaction</DialogTitle>
+        <DialogDescription>Send money your friend</DialogDescription>
+      </DialogHeader>
       <form
         ref={formRef}
         onSubmit={handleSubmit(onSubmit)}

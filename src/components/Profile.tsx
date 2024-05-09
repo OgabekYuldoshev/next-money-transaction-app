@@ -1,10 +1,7 @@
-import {
-  getKindeServerSession,
-  LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/server";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
 import { LogOut } from "lucide-react";
-import { redirect } from "next/navigation";
 import React from "react";
+import { getUserSession } from "@/lib/fetchers";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -16,10 +13,7 @@ import {
 } from "./ui/dropdown-menu";
 
 const Profile = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
-  if (!user) redirect("/");
+  const user = await getUserSession();
 
   const fullname = [user.given_name, user.family_name]
     .filter(Boolean)

@@ -3,17 +3,18 @@ import React, { useState } from "react";
 import TransactionForm from "../forms/TransactionForm";
 import TwoAuthentication from "../forms/TwoAuthentication";
 import { Button } from "./ui/button";
-import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 
 const CreateTransaction = ({ isVerified }: { isVerified: boolean }) => {
   const [isOpen, setOpen] = useState(false);
   const toggle = () => setOpen((p) => !p);
+
   return (
-    <Drawer open={isOpen} onOpenChange={setOpen}>
-      <DrawerTrigger>
+    <Dialog open={isOpen} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
         <Button>Create transaction</Button>
-      </DrawerTrigger>
-      <DrawerContent>
+      </DialogTrigger>
+      <DialogContent>
         <div className="m-auto py-4">
           {isVerified ? (
             <TransactionForm onClose={toggle} />
@@ -21,8 +22,8 @@ const CreateTransaction = ({ isVerified }: { isVerified: boolean }) => {
             <TwoAuthentication onClose={toggle} />
           )}
         </div>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   );
 };
 

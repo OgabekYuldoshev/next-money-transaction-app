@@ -4,13 +4,13 @@ import { AlertCircle, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import { toast } from "sonner";
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Alert, AlertDescription, AlertTitle } from "../components/ui/alert";
 import { buttonVariants } from "../components/ui/button";
-import {
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from "../components/ui/drawer";
 import {
   InputOTP,
   InputOTPGroup,
@@ -62,11 +62,12 @@ const TwoAuthentication = ({ onClose }: { onClose(): void }) => {
 
   return (
     <>
-      <DrawerHeader>
-        <DrawerTitle>
+      <DialogHeader>
+        <DialogTitle>
+          {" "}
           You can connect your two auth verification first!
-        </DrawerTitle>
-        <DrawerDescription>
+        </DialogTitle>
+        <DialogDescription>
           You should download <b>Google Authenticator App</b> in
           <a
             className={buttonVariants({
@@ -88,8 +89,8 @@ const TwoAuthentication = ({ onClose }: { onClose(): void }) => {
             Play Market
           </a>
           then scan this QR code please.
-        </DrawerDescription>
-      </DrawerHeader>
+        </DialogDescription>
+      </DialogHeader>
       <div className="my-2">
         <QRCode size={150} className="m-auto" value={data.url} />
         <div className="flex items-center justify-center mt-8 flex-col">
