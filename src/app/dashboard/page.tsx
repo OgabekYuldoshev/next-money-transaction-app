@@ -6,6 +6,7 @@ import { db } from "../../utils/db";
 
 const Page = async () => {
   const { getUser } = getKindeServerSession();
+
   const user = await getUser();
 
   if (!user) redirect("/auth-callback?origin=dashboard");

@@ -1,4 +1,4 @@
-import { getCardInfo, getUserInfo } from "@/lib/fetchers";
+import { getCardInfo, getUserInfo } from "@/lib/actions/user.actions";
 import CreateTransaction from "./CreateTransaction";
 
 const CreditCard = async () => {

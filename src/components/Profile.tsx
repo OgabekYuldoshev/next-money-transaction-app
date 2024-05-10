@@ -1,7 +1,7 @@
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
 import { LogOut } from "lucide-react";
 import React from "react";
-import { getUserSession } from "@/lib/fetchers";
+import { getUserSession } from "@/lib/actions/user.actions";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
